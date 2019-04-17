@@ -97,7 +97,9 @@ class Timer {
     if (this.interval === null) {
       this.interval = setInterval(() => {
         this.time = this.time.subtract(1, 'second')
-        this.updateTime()
+        if (this.room !== 'default') {
+          this.updateTime()
+        }
         if (this.time.format('HH:mm:ss') === '00:00:00') {
           this.stopTimer()
         }
