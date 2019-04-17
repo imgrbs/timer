@@ -11,8 +11,11 @@ import { observer } from 'mobx-react'
 const Layout = styled.div`
   min-height: 100vh;
   .d-flex.btn {
-    font-size: 1.5em;
+    font-size: 1.25em;
     min-width: 90px;
+  }
+  svg {
+    font-size: 2.25em;
   }
 `
 
