@@ -20,11 +20,7 @@ class Timer {
   }
 
   setRoom(room) {
-    if (room === '' || room === 'default') {
-      room = 'default'
-    } else {
-      this.room = room
-    }
+    this.room = room
   }
 
   setTime(time) {
@@ -42,7 +38,7 @@ class Timer {
   }
 
   createRoom() {
-    if (this.room === 'default') {
+    if (this.room === 'default' || this.room === '') {
       this.generateRoom()
     }
     this.updateTime()
@@ -50,9 +46,8 @@ class Timer {
   }
 
   joinRoom() {
-    if (this.room !== 'default') {
+    if (this.room !== 'default' && this.room !== '') {
       const self = this
-      this.stopTimer()
       this.setPermission('visitor')
       db.ref(`rooms/${this.room}`).on('value', function(snapshot) {
         if (snapshot.val()) {
