@@ -38,16 +38,7 @@ class Timer {
   createRoom() {
     const provider = new firebase.auth.FacebookAuthProvider()
     this.room = generateRoom();
-    firebase.auth().signInWithPopup(provider).then(userAuth => {
-      const uid = userAuth.user.uid
-      const profile = userAuth.additionalUserInfo.profile;
-      insert(`rooms/${this.room}`, {
-        uid,
-        provider_id: profile.id,
-        name: profile.name,
-        time: this.time.format()
-      })
-    })
+    this.updateTime()
     this.setPermission('creator')
   }
 
