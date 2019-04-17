@@ -52,9 +52,10 @@ class Timer {
   }
 
   joinRoom() {
-    this.stopTimer()
     if (this.room !== 'default') {
       const self = this
+      this.stopTimer()
+      this.setPermission('visitor')
       db.ref(`rooms/${this.room}`).on('value', function(snapshot) {
         if (snapshot.val()) {
           self.setTime(day(snapshot.val().time))
@@ -62,7 +63,6 @@ class Timer {
           self.setMessage('Room Not Found.')
         }
       })
-      this.setPermission('visitor')
     }
   }
 
