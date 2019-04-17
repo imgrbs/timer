@@ -1,7 +1,7 @@
 import day from 'dayjs'
 import { extendObservable } from 'mobx';
 
-import firebase, { db, insert } from '../tools/firebase'
+import { db, insert } from '../tools/firebase'
 
 class Timer {
   constructor() {

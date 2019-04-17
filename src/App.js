@@ -2,13 +2,28 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import styled from 'styled-components';
 
+import Play from 'react-icons/lib/md/play-circle-filled'
+import Pause from 'react-icons/lib/md/pause-circle-filled'
+import Reset from 'react-icons/lib/md/cached'
+
 import { observer } from 'mobx-react'
 
 const Layout = styled.div`
   min-height: 100vh;
+  .d-flex.btn {
+    font-size: 1.5em;
+    min-width: 90px;
+  }
+`
+
+const Bold = styled.h3`
+  display: inline;
 `
 
 const Time = styled.h1`
+  display: inline;
+  font-weight: normal; 
+  
   font-size: 4em;
   @media (min-width: 768px) {
     font-size: 7em;
@@ -16,6 +31,10 @@ const Time = styled.h1`
   @media (min-width: 1400px) {
     font-size: 15em;
   }
+`
+
+const Number = styled.span`
+  font-family: 'Segment7Standard'; 
 `
 
 function isCreator(permission) {
@@ -29,44 +48,61 @@ const App = ({ timer }) => {
     <Layout>
       <div className="container">
         <div className="row">
-          <div className="col-12 text-center">
-            <p className='mt-5'>
-              You are <u>"{permission}"</u> of {room} room.
-            </p>
-            <Time>{`${time.format('HH:mm:ss')}`}</Time>
+          <div className="col-12 text-center mt-5">
+            <div className='mb-3'>
+              You are a <Bold><u>"{permission}"</u></Bold> of <Bold>{room}</Bold> room.
+            </div>
+            <Time>
+              <Number>{`${time.format('HH')}`}</Number>
+              :
+              <Number>{`${time.format('mm')}`}</Number>
+              :
+              <Number>{`${time.format('ss')}`}</Number>
+            </Time>
             {
               isCreator(permission) && (
                 <React.Fragment>
-                  <div className="mt-5 d-flex justify-content-center align-items-center">
-                    <input
-                      min='0'
-                      max='23'
-                      onChange={e => timer.setHour(+e.target.value)}
-                      value={time.hour()}
-                      type='number'
-                      className='form-control'
-                    />:
-                    <input
-                      min='0'
-                      max='59'
-                      onChange={e => timer.setMinute(+e.target.value)}
-                      value={time.minute()}
-                      type='number'
-                      className='form-control'
-                    />:
-                    <input
-                      min='0'
-                      max='59'
-                      onChange={e => timer.setSecond(+e.target.value)}
-                      value={time.second()}
-                      type='number'
-                      className='form-control'
-                    />
-                  </div>
-                  <div className="mt-5 d-flex justify-content-between">
-                    <button className='btn btn-success' onClick={() => timer.startTimer()}>Start</button>
-                    <button className='btn btn-warning' onClick={() => timer.stopTimer()}>Pause</button>
-                    <button className='btn btn-danger' onClick={() => timer.reset()}>Reset</button>
+                  <div className="row">
+                    <div className="col-12 mt-4 mb-4 d-flex justify-content-center align-items-center">
+                      <input
+                        min='0'
+                        max='23'
+                        onChange={e => timer.setHour(+e.target.value)}
+                        value={time.hour()}
+                        type='number'
+                        className='form-control'
+                      />:
+                      <input
+                        min='0'
+                        max='59'
+                        onChange={e => timer.setMinute(+e.target.value)}
+                        value={time.minute()}
+                        type='number'
+                        className='form-control'
+                      />:
+                      <input
+                        min='0'
+                        max='59'
+                        onChange={e => timer.setSecond(+e.target.value)}
+                        value={time.second()}
+                        type='number'
+                        className='form-control'
+                      />
+                    </div>
+                    <div className="col-12 col-md-6 offset-md-3 d-flex justify-content-around">
+                      <button className='d-flex flex-column align-items-center btn btn-success' onClick={() => timer.startTimer()}>
+                        <Play />
+                        Start
+                      </button>
+                      <button className='d-flex flex-column align-items-center btn btn-warning' onClick={() => timer.stopTimer()}>
+                        <Pause />
+                        Pause
+                      </button>
+                      <button className='d-flex flex-column align-items-center btn btn-danger' onClick={() => timer.reset()}>
+                        <Reset />
+                        Reset
+                      </button>
+                    </div>
                   </div>
                 </React.Fragment>
               )
@@ -74,15 +110,15 @@ const App = ({ timer }) => {
           </div>
         </div>
       </div>
-      <div className="fixed-bottom w-100">
+      <div className="fixed-bottom w-100 p-3 bg-light">
         <div className="row">
-          <div className="col-12 col-lg-4 offset-lg-4">
+          <div className="mt-2 col-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
             <input value={room} onChange={e => timer.setRoom(e.target.value)} className='form-control' type="text" placeholder='Input Room Code...' />
           </div>
-          <div className="col-12 col-lg-2 offset-lg-4">
-            <button onClick={() => timer.createRoom()} className='btn btn-light w-100'>Create Room</button>
+          <div className="mt-2 col-12 col-md-3 offset-md-3 col-lg-2 offset-lg-4">
+            <button onClick={() => timer.createRoom()} className='btn btn-outline-primary w-100'>Create Room</button>
           </div>
-          <div className="col-12 col-lg-2">
+          <div className="mt-2 col-12 col-md-3  col-lg-2">
             <button onClick={() => timer.joinRoom()} className='btn btn-success w-100'>Join Room</button>
           </div>
         </div>
