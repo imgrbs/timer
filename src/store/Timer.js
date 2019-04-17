@@ -70,6 +70,7 @@ class Timer {
 
   setBackup() {
     this.backup = this.time
+    this.updateTime()
   }
 
   setHour(hour = 0) {
@@ -87,11 +88,15 @@ class Timer {
     this.setBackup()
   }
 
+  updateTime() {
+    insert(`rooms/${this.room}`, { time: this.time.toISOString() })
+  }
+
   startTimer() {
     if (this.interval === null) {
       this.interval = setInterval(() => {
         this.time = this.time.subtract(1, 'second')
-        insert(`rooms/${this.room}`, { time: this.time.toISOString() })
+        this.updateTime()
         if (this.time.format('HH:mm:ss') === '00:00:00') {
           this.stopTimer()
         }
@@ -106,6 +111,7 @@ class Timer {
 
   reset() {
     this.time = this.backup
+    this.updateTime()
   }
 }
 
