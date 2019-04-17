@@ -1,15 +1,67 @@
 import day from 'dayjs'
 import { extendObservable } from 'mobx';
 
+import firebase, { db, insert } from '../tools/firebase'
+
+function generateRoom() {
+  return new Date().valueOf() % 1000000;
+}
+
 class Timer {
   constructor() {
     extendObservable(this, {
-        permission: 'creator',
+        message: '',
+        user: {
+          id: 'none',
+          name: 'guest',
+        },
+        permission: 'visitor',
         room: 'default',
         time: day().set('hour', 0).set('minute', 3).set('second', 0),
         backup: day().set('hour', 0).set('minute', 3).set('second', 0),
         interval: null,
     });
+  }
+
+  setRoom(room) {
+    this.room = room
+  }
+
+  setTime(time) {
+    this.time = time
+  }
+
+  setMessage(message) {
+    this.message = message
+  }
+
+  createRoom() {
+    const provider = new firebase.auth.FacebookAuthProvider()
+    this.room = generateRoom();
+    firebase.auth().signInWithPopup(provider).then(userAuth => {
+      const uid = userAuth.user.uid
+      const profile = userAuth.additionalUserInfo.profile;
+      insert(`rooms/${this.room}`, {
+        uid,
+        provider_id: profile.id,
+        name: profile.name,
+        time: this.time.format()
+      })
+    })
+    this.setPermission('creator')
+  }
+
+  joinRoom() {
+    if (this.room !== 'default') {
+      const self = this
+      db.ref(`rooms/${this.room}`).on('value', function(snapshot) {
+        if (snapshot.val()) {
+          self.setTime(day(snapshot.val().time))
+        } else {
+          self.setMessage('Room Not Found.')
+        }
+      })
+    }
   }
 
   setPermission(permission) {
@@ -25,7 +77,6 @@ class Timer {
     this.setBackup()
   }
 
-
   setMinute(minute = 0) {
     this.time = this.time.set('minute', minute)
     this.setBackup()
@@ -40,6 +91,7 @@ class Timer {
     if (this.interval === null) {
       this.interval = setInterval(() => {
         this.time = this.time.subtract(1, 'second')
+        insert(`rooms/${this.room}`, { time: this.time.toISOString() })
         if (this.time.format('HH:mm:ss') === '00:00:00') {
           this.stopTimer()
         }

@@ -1,7 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect } from 'react';
+import styled from 'styled-components';
 
 import { observer } from 'mobx-react'
+
+const Layout = styled.div`
+  min-height: 100vh;
+`
 
 function isCreator(permission) {
   return permission === 'creator'
@@ -10,14 +15,8 @@ function isCreator(permission) {
 const App = ({ timer }) => {
   const { time, permission, room } = timer
 
-  // useEffect(() => {
-    // const permission = localStorage.getItem('permission')
-    // if (permission) {
-      // timer.setPermission(permission)
-    // }
-  // })
-
   return (
+    <Layout>
       <div className="container">
         <div className="row">
           <div className="col-12 text-center">
@@ -56,8 +55,8 @@ const App = ({ timer }) => {
                   </div>
                   <div className="mt-5 d-flex justify-content-between">
                     <button className='btn btn-success' onClick={() => timer.startTimer()}>Start</button>
-                    <button className='btn btn-danger' onClick={() => timer.stopTimer()}>Stop</button>
-                    <button className='btn btn-warning' onClick={() => timer.reset()}>Reset</button>
+                    <button className='btn btn-warning' onClick={() => timer.stopTimer()}>Pause</button>
+                    <button className='btn btn-danger' onClick={() => timer.reset()}>Reset</button>
                   </div>
                 </React.Fragment>
               )
@@ -65,6 +64,20 @@ const App = ({ timer }) => {
           </div>
         </div>
       </div>
+      <div className="fixed-bottom w-100">
+        <div className="row">
+          <div className="col-12 col-lg-4 offset-lg-4">
+            <input onChange={e => timer.setRoom(e.target.value)} className='form-control' type="text" placeholder='Input Room Code...' />
+          </div>
+          <div className="col-12 col-lg-2 offset-lg-4">
+            <button onClick={() => timer.joinRoom()} className='btn btn-success w-100'>Join</button>
+          </div>
+          <div className="col-12 col-lg-2">
+            <button onClick={() => timer.createRoom()} className='btn btn-light w-100'>Create</button>
+          </div>
+        </div>
+      </div>
+    </Layout>
     )
 };
 
