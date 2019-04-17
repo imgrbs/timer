@@ -8,6 +8,16 @@ const Layout = styled.div`
   min-height: 100vh;
 `
 
+const Time = styled.h1`
+  font-size: 4em;
+  @media (min-width: 768px) {
+    font-size: 7em;
+  }
+  @media (min-width: 1400px) {
+    font-size: 15em;
+  }
+`
+
 function isCreator(permission) {
   return permission === 'creator'
 }
@@ -23,7 +33,7 @@ const App = ({ timer }) => {
             <p className='mt-5'>
               You are <u>"{permission}"</u> of {room} room.
             </p>
-            <h1>{`${time.format('HH:mm:ss')}`}</h1>
+            <Time>{`${time.format('HH:mm:ss')}`}</Time>
             {
               isCreator(permission) && (
                 <React.Fragment>
