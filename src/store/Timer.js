@@ -15,7 +15,7 @@ class Timer {
           id: 'none',
           name: 'guest',
         },
-        permission: 'visitor',
+        permission: 'creator',
         room: 'default',
         time: day().set('hour', 0).set('minute', 3).set('second', 0),
         backup: day().set('hour', 0).set('minute', 3).set('second', 0),
@@ -61,6 +61,7 @@ class Timer {
           self.setMessage('Room Not Found.')
         }
       })
+      this.setPermission('visitor')
     }
   }
 
