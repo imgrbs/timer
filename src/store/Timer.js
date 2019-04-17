@@ -36,7 +36,6 @@ class Timer {
   }
 
   createRoom() {
-    const provider = new firebase.auth.FacebookAuthProvider()
     this.room = generateRoom();
     this.updateTime()
     this.setPermission('creator')
