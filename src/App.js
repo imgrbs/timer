@@ -67,7 +67,7 @@ const App = ({ timer }) => {
       <div className="fixed-bottom w-100">
         <div className="row">
           <div className="col-12 col-lg-4 offset-lg-4">
-            <input onChange={e => timer.setRoom(e.target.value)} className='form-control' type="text" placeholder='Input Room Code...' />
+            <input value={room} onChange={e => timer.setRoom(e.target.value)} className='form-control' type="text" placeholder='Input Room Code...' />
           </div>
           <div className="col-12 col-lg-2 offset-lg-4">
             <button onClick={() => timer.createRoom()} className='btn btn-light w-100'>Create Room</button>

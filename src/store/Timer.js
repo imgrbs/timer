@@ -3,10 +3,6 @@ import { extendObservable } from 'mobx';
 
 import firebase, { db, insert } from '../tools/firebase'
 
-function generateRoom() {
-  return new Date().valueOf() % 1000000;
-}
-
 class Timer {
   constructor() {
     extendObservable(this, {
@@ -35,8 +31,16 @@ class Timer {
     this.message = message
   }
 
+  generateRoom() {
+    const timestamp = new Date().valueOf()
+    const SIX_CHAR = 1000000
+    this.room =  timestamp % SIX_CHAR
+  }
+
   createRoom() {
-    this.room = generateRoom();
+    if (this.room === 'default') {
+      this.generateRoom()
+    }
     this.updateTime()
     this.setPermission('creator')
   }
