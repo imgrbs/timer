@@ -52,6 +52,7 @@ class Timer {
   }
 
   joinRoom() {
+    this.stopTimer()
     if (this.room !== 'default') {
       const self = this
       db.ref(`rooms/${this.room}`).on('value', function(snapshot) {
