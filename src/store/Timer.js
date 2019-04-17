@@ -84,7 +84,9 @@ class Timer {
   }
 
   updateTime() {
-    insert(`rooms/${this.room}`, { time: this.time.toISOString() })
+    if (this.room !== '') {
+      insert(`rooms/${this.room}`, { time: this.time.toISOString() })
+    }
   }
 
   startTimer() {
