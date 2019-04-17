@@ -17,6 +17,16 @@ const Layout = styled.div`
   svg {
     font-size: 2.25em;
   }
+  @media (min-width: 768px){
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  @media (max-width: 576px) {
+    .mt-5-custom {
+      margin-top: 3rem!important;
+    } 
+  }
 `
 
 const Bold = styled.h3`
@@ -51,9 +61,9 @@ const App = ({ timer }) => {
     <Layout>
       <div className="container">
         <div className="row">
-          <div className="col-12 text-center mt-5">
+          <div className="col-12 text-center mt-5-custom">
             <div className='mb-3'>
-              You are a <Bold><u>"{permission}"</u></Bold> of <Bold>{room}</Bold> room.
+              You are a <Bold>"<u>{permission}</u>"</Bold> of <Bold>{room}</Bold> room.
             </div>
             <Time>
               <Number>{`${time.format('HH')}`}</Number>
