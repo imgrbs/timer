@@ -20,7 +20,11 @@ class Timer {
   }
 
   setRoom(room) {
-    this.room = room
+    if (room === '' || room === 'default') {
+      room = 'default'
+    } else {
+      this.room = room
+    }
   }
 
   setTime(time) {
