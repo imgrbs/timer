@@ -1,4 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ReactGA from 'react-ga';
+
 import React from 'react';
 import styled from 'styled-components';
 
@@ -50,13 +52,18 @@ const Number = styled.span`
   font-family: 'Segment7Standard'; 
 `
 
+function initializeReactGA() {
+  ReactGA.initialize('UA-123791717-1');
+  ReactGA.pageview('/');
+}
+
 function isCreator(permission) {
   return permission === 'creator'
 }
 
 const App = ({ timer }) => {
   const { time, permission, room } = timer
-
+  initializeReactGA()
   return (
     <Layout>
       <div className="container">
