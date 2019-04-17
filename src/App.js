@@ -70,10 +70,10 @@ const App = ({ timer }) => {
             <input onChange={e => timer.setRoom(e.target.value)} className='form-control' type="text" placeholder='Input Room Code...' />
           </div>
           <div className="col-12 col-lg-2 offset-lg-4">
-            <button onClick={() => timer.joinRoom()} className='btn btn-success w-100'>Join</button>
+            <button onClick={() => timer.joinRoom()} className='btn btn-success w-100'>Join Room</button>
           </div>
           <div className="col-12 col-lg-2">
-            <button onClick={() => timer.createRoom()} className='btn btn-light w-100'>Create</button>
+            <button onClick={() => timer.createRoom()} className='btn btn-light w-100'>Create Room</button>
           </div>
         </div>
       </div>
