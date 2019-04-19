@@ -3,7 +3,8 @@
     src: url('/Segment7Standard.otf') format('opentype');
     font-weight: normal;
     font-style: italic;
-    }
+    font-display: auto;
+}
 
  /* The following rules are deprecated. */ 
 
@@ -12,4 +13,5 @@
     src: url('/Segment7Standard.otf') format('opentype');
     font-weight: normal;
     font-style: italic;
+    font-display: auto;
 }
