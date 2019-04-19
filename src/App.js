@@ -49,7 +49,7 @@ const Time = styled.h1`
 `
 
 const Number = styled.span`
-  font-family: 'Segment7Standard'; 
+  font-family: 'Segment7Standard', monospace; 
 `
 
 function initializeReactGA() {
