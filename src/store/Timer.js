@@ -4,19 +4,25 @@ import { extendObservable } from 'mobx';
 import { db, insert } from '../tools/firebase'
 
 class Timer {
-  constructor() {
-    extendObservable(this, {
-        message: '',
-        user: {
-          id: 'none',
-          name: 'guest',
-        },
-        permission: 'creator',
-        room: 'default',
-        time: day().set('hour', 0).set('minute', 3).set('second', 0),
-        backup: day().set('hour', 0).set('minute', 3).set('second', 0),
-        interval: null,
-    });
+  constructor(params) {
+    const init = {
+      message: '',
+      user: {
+        id: 'none',
+        name: 'guest',
+      },
+      permission: 'creator',
+      room: 'default',
+      time: day().set('hour', 0).set('minute', 3).set('second', 0),
+      backup: day().set('hour', 0).set('minute', 3).set('second', 0),
+      interval: null,
+  }
+
+    if (params) {
+      init.room = params.room
+    }
+
+    extendObservable(this, init);
   }
 
   setRoom(room) {
